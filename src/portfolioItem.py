@@ -1,5 +1,4 @@
-from myasset import Asset
-
+from src.myasset import Asset
 
 class PortfolioItem:
     asset = None

@@ -1,5 +1,6 @@
-from myasset import Asset
-from portfolioItem import PortfolioItem
+from src.myasset import Asset
+from src.portfolioItem import PortfolioItem
+
 
 class Portfolio:
     id = 0
