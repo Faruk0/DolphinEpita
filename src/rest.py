@@ -16,18 +16,18 @@ class RestQueries:
                            auth=requests.auth.HTTPBasicAuth(
                                RestQueries.creds['username'],
                                RestQueries.creds['password']))
-        return res.text
+        return res.json()
 
     def post(path, content):
         res = requests.get(base_uri + path,
                            data=content,
                            auth=requests.auth.HTTPBasicAuth(creds['username'],
                                                             creds['password']))
-        return res.text
+        return res.json()
 
     def post(path, content):
         res = requests.get(base_uri + path,
                            data=content,
                            auth=requests.auth.HTTPBasicAuth(creds['username'],
                                                             creds['password']))
-        return res.text
+        return res.json()
