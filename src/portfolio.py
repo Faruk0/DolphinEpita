@@ -1,26 +1,28 @@
 from myasset import Asset
-
+from portfolioItem import PortfolioItem
 
 class Portfolio:
-    id = ""
+    id = 0
     value = ""
     device = "EUR"
-    assets = []
+    items = []
 
-    def addasset(self, asset):
-        self.assets.append(asset)
+    def additem(self, item):
+        self.items.append(item)
 
     def toString(self):
         result = ""
-        for asset in self.assets:
-            result = result + asset.tostring() + "\n"
+        for item in self.items:
+            result = result + item.tostring() + "\n"
         return result
 
 
 pf = Portfolio()
-as1 = Asset("1", "test", "action", "60", "3000", "50", "10%")
-as2 = Asset("2", "test2", "obligation", "80", "300", "500", "50%")
-pf.addasset(as1)
+as1 = Asset(1, "nom1", "action")
+pfi1 = PortfolioItem(as1, 60, 3000, 50, 10)
+as2 = Asset(2, "nom2", "obligation")
+pfi2 = PortfolioItem(as2, 80, 300, 500, 50)
+pf.additem(pfi1)
 print(pf.toString())
-pf.addasset(as2)
+pf.additem(pfi2)
 print(pf.toString())
