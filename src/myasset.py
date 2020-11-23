@@ -1,11 +1,11 @@
 class Asset:
-    id = ""
+    id = 0
     name = ""
     type = ""
-    quantity = ""
-    cost = ""
-    amount = ""
-    nav = ""
+    quantity = 0
+    cost = 0
+    amount = 0
+    nav = 0
 
     def __init__(self, id, name, type, quantity, cost, amount, nav):
         self.id = id
@@ -17,10 +17,10 @@ class Asset:
         self.nav = nav
 
     def tostring(self):
-        return "id : " + self.id + "\n" + \
+        return "id : " + str(self.id) + "\n" + \
                "name : " + self.name + "\n" + \
                "type : " + self.type + "\n" + \
-               "quantity : " + self.quantity + "\n" + \
-               "cost : " + self.cost + "\n" + \
-               "amount : " + self.amount + "\n" + \
-               "%NAV : " + self.nav + "\n"
+               "quantity : " + str(self.quantity) + "\n" + \
+               "cost : " + str(self.cost) + "\n" + \
+               "amount : " + str(self.amount) + "\n" + \
+               "%NAV : " + str(self.nav) + "\n"
