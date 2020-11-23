@@ -9,7 +9,7 @@ class RestQueries:
     with open("credentials.json", "r") as fd:
         creds = json.loads(fd.read())
     if len(creds) == 0:
-        raise("Error:\tcredentials.json could not be parsed")
+        raise("Error:credentials.json could not be parsed")
 
     def get(path):
         res = requests.get(RestQueries.base_uri + path,
@@ -18,14 +18,14 @@ class RestQueries:
                                RestQueries.creds['password']))
         return res.text
 
-    def post(self, path, content):
+    def post(path, content):
         res = requests.get(base_uri + path,
                            data=content,
                            auth=requests.auth.HTTPBasicAuth(creds['username'],
                                                             creds['password']))
         return res.text
 
-    def post(self, path, content):
+    def post(path, content):
         res = requests.get(base_uri + path,
                            data=content,
                            auth=requests.auth.HTTPBasicAuth(creds['username'],
