@@ -8,15 +8,13 @@ def create_assets(jsonAssets):
     assets = []
     for asset in jsonAssets:
         val = float(asset["LAST_CLOSE_VALUE"]["value"].replace(",", ".").split(" ")[0])
-        rate = asset["LAST_CLOSE_VALUE"]["value"].split(" ")[1]
-        Currencies.addCur(rate)
-        assets.append(Asset(int(asset["ASSET_DATABASE_ID"]["value"]),  #id
-                            asset["LABEL"]["value"],              #name
-                            asset["TYPE"]["value"],               #type
-                            0,                           #quantity
-                            val,
-                            0,                           #amount
-                            0))                           #nav
+        curName = asset["LAST_CLOSE_VALUE"]["value"].split(" ")[1]
+        val *= Currencies.addOrGetCur(curName)
+
+        assets.append(Asset(id = int(asset["ASSET_DATABASE_ID"]["value"]),  #id
+                            name = asset["LABEL"]["value"],              #name
+                            type = asset["TYPE"]["value"],               #type
+                            value = val))
     return assets
 
 
@@ -26,5 +24,5 @@ if __name__ == "__main__":
     responseAssets = RestQueries.get("asset")
     assets = create_assets(responseAssets)
     for i in assets:
-        print(i.tostring())
+        print(i.toString())
     Currencies.dump()
