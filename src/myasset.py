@@ -1,4 +1,4 @@
-from src.rest import RestQueries
+from rest import RestQueries
 
 
 class Asset:
@@ -27,4 +27,4 @@ class Asset:
         return "ID : " + str(self.id) + "\n" + \
                "Nom : " + self.name + "\n" + \
                "Type : " + self.type + "\n" + \
-               "Sharpe : " + self.sharpe
+               "Sharpe : " + str(self.sharpe)
