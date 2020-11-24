@@ -1,6 +1,8 @@
+import json
+
 from src.myasset import Asset
 from src.portfolioItem import PortfolioItem
-
+from src.rest import RestQueries
 
 class Portfolio:
     id = 0
@@ -17,13 +19,17 @@ class Portfolio:
             result = result + item.tostring() + "\n"
         return result
 
+    def getportfolio(self, id):
+        api = RestQueries()
+        return api.get("portfolio/" + str(id) + "/dyn_amount_compo")
+
 
 pf = Portfolio()
-as1 = Asset(1, "nom1", "action")
-pfi1 = PortfolioItem(as1, 60, 3000, 50, 10)
-as2 = Asset(2, "nom2", "obligation")
-pfi2 = PortfolioItem(as2, 80, 300, 500, 50)
-pf.additem(pfi1)
-print(pf.toString())
-pf.additem(pfi2)
-print(pf.toString())
+
+ourpf = pf.getportfolio(1830)
+with open('portfolio.txt', 'w') as outfile:
+    json.dump(ourpf, outfile)
+
+pfref = pf.getportfolio(2201)
+with open('ref.txt', 'w') as outfile:
+    json.dump(pfref, outfile)
