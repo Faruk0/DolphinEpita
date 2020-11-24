@@ -20,8 +20,7 @@ class Portfolio:
         return result
 
     def getportfolio(self, id):
-        api = RestQueries()
-        return api.get("portfolio/" + str(id) + "/dyn_amount_compo")
+        return RestQueries.get("portfolio/" + str(id) + "/dyn_amount_compo")
 
 
 pf = Portfolio()
