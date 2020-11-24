@@ -19,6 +19,9 @@ class Asset:
     def getattribute(self, attribute):
         return RestQueries.get("asset/" + str(self.id) + "/attribute/" + attribute)
 
+    def getcotation(self):
+        return RestQueries.get("/asset/" + str(self.id) + "/quote")
+
     def toString(self):
         return "ID : " + str(self.id) + "\n" + \
                "Nom : " + self.name + "\n" + \
