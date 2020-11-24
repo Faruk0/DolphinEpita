@@ -45,7 +45,27 @@ def load_sharpes(assetList, sharpeDict):
         if str(asset.id) in sharpeDict:
             asset.sharpe = sharpeDict[str(asset.id)]["12"]["value"]
         else:
-            print(f"ID {asset.id}: Not in sharpe list")
+            print("ID {asset.id}: Not in sharpe list")
+
+def findmin(assets):
+    min = 0
+    value = assets[0].sharpe
+    for i in range(1, len(assets)):
+        if value > assets[i].sharpe:
+            min = i
+            value = assets[i].sharpe
+    return min
+
+def computelist(assets):
+    result = []
+    for i in range(len(assets)):
+        if len(result) < 20:
+            result.append(assets[i])
+            continue
+        min = findmin(result)
+        if assets[i].sharpe > result[min].sharpe:
+            result[min] = assets[i]
+    return result
 
 if __name__ == "__main__":
 
@@ -57,3 +77,6 @@ if __name__ == "__main__":
     for i in assets:
         if (i.sharpe):
             print(i.toString())
+
+    bestassets = computelist(assets)
+    print()
