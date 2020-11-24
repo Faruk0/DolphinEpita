@@ -1,3 +1,6 @@
+from src.rest import RestQueries
+
+
 class Asset:
     id = 0
     name = ""
@@ -9,6 +12,12 @@ class Asset:
         self.name = name
         self.type = type
         self.value = value
+
+    def getinfo(self):
+        return RestQueries.get("asset/" + str(self.id))
+
+    def getattribute(self, attribute):
+        return RestQueries.get("asset/" + str(self.id) + "/attribute/" + attribute)
 
     def toString(self):
         return "ID : " + str(self.id) + "\n" + \
