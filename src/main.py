@@ -1,4 +1,6 @@
+import argparse
 import json
+
 from rest import RestQueries
 from myasset import Asset
 from currencies import Currencies
@@ -69,14 +71,33 @@ def computelist(assets):
 
 if __name__ == "__main__":
 
-    responseAssets = RestQueries.get("asset")
+    parser = argparse.ArgumentParser(description="Dolphin project")
+
+    parser.add_argument("-S", "--sharpe",
+                        required=False, help="Load sharpe values from file")
+    parser.add_argument("-A", "--assets",
+                        required=False, help="Load assets values from file")
+    args = parser.parse_args()
+
+    responseAssets = None
+    if args.assets is not None:
+        with open(args.assets, "r") as fd:
+            responseAssets = json.loads(fd.read())
+    else:
+        responseAssets = RestQueries.get("asset")
+
     assets = create_assets(responseAssets)
-    sharpeDict = get_all_sharpe(assets)
+
+    sharpeDict = None
+    if args.sharpe is not None:
+        with open(args.sharpe, "r") as fd:
+            sharpeDict = json.loads(fd.read())
+    else:
+        sharpeDict = get_all_sharpe(assets)
+
     load_sharpes(assets, sharpeDict)
 
     for i in assets:
-        if (i.sharpe):
-            print(i.toString())
+        print(i.toString())
 
     bestassets = computelist(assets)
-    print()
