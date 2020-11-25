@@ -7,12 +7,13 @@ class Asset:
     type = ""
     value = 0
 
-    def __init__(self, id, name, type, value, sharpe=0):
+    def __init__(self, id, name, type, value, sharpe=0, qty=0):
         self.id = id
         self.name = name
         self.type = type
         self.value = value
         self.sharpe = sharpe
+        self.qty = qty
 
     def getinfo(self):
         return RestQueries.get("asset/" + str(self.id))
@@ -27,4 +28,5 @@ class Asset:
         return "ID : " + str(self.id) + "\n" + \
                "Nom : " + self.name + "\n" + \
                "Type : " + self.type + "\n" + \
-               "Sharpe : " + str(self.sharpe)
+               "Sharpe : " + str(self.sharpe) + "\n" + \
+               "Qty : " + str(self.qty)

@@ -4,7 +4,7 @@ import json
 from rest import RestQueries
 from myasset import Asset
 from currencies import Currencies
-
+from portfolio import Portfolio
 
 def create_assets(jsonAssets):
     assets = []
@@ -109,7 +109,15 @@ if __name__ == "__main__":
 
     load_sharpes(assets, sharpeDict)
 
-#    for i in assets:
-#        print(i.toString())
-
     bestassets = computelist(assets)
+
+    portfolio = Portfolio()
+
+    for asset in bestassets:
+        asset.qty = 1
+        portfolio.additem(asset)
+
+    res = portfolio.putPortfolio()
+    print(res)
+    test = RestQueries.get("portfolio/1830/dyn_amount_compo")
+    print(json.dumps(test, indent=4))

@@ -30,4 +30,4 @@ class RestQueries:
                            data=content,
                            auth=requests.auth.HTTPBasicAuth(RestQueries.creds['username'],
                                                             RestQueries.creds['password']))
-        return res.json()
+        return res
