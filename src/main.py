@@ -77,6 +77,10 @@ if __name__ == "__main__":
                         required=False, help="Load sharpe values from file")
     parser.add_argument("-A", "--assets",
                         required=False, help="Load assets values from file")
+    parser.add_argument("-oS", "--output-sharpe",
+                        required=False, help="Dump sharpe values to file")
+    parser.add_argument("-oA", "--output-assets",
+                        required=False, help="Dump assets values to file")
     args = parser.parse_args()
 
     responseAssets = None
@@ -85,6 +89,10 @@ if __name__ == "__main__":
             responseAssets = json.loads(fd.read())
     else:
         responseAssets = RestQueries.get("asset")
+
+    if args.output_assets is not None:
+        with open(args.output_assets, "w") as fd:
+            fd.write(json.dumps(responseAssets, indent=4))
 
     assets = create_assets(responseAssets)
 
@@ -95,9 +103,13 @@ if __name__ == "__main__":
     else:
         sharpeDict = get_all_sharpe(assets)
 
+    if args.output_sharpe is not None:
+        with open(args.output_sharpe, "w") as fd:
+            fd.write(json.dumps(sharpeDict, indent=4))
+
     load_sharpes(assets, sharpeDict)
 
-    for i in assets:
-        print(i.toString())
+#    for i in assets:
+#        print(i.toString())
 
     bestassets = computelist(assets)
