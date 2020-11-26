@@ -11,6 +11,8 @@ def create_assets(jsonAssets):
     for asset in jsonAssets:
         if asset["TYPE"]["value"] != "STOCK":
             continue
+        if not "LAST_CLOSE_VALUE" in asset:
+            continue
         val = float(asset["LAST_CLOSE_VALUE"]["value"].replace(",", ".").split(" ")[0])
         curName = asset["LAST_CLOSE_VALUE"]["value"].split(" ")[1]
         val *= Currencies.addOrGetCur(curName)
@@ -88,7 +90,7 @@ if __name__ == "__main__":
         with open(args.assets, "r") as fd:
             responseAssets = json.loads(fd.read())
     else:
-        responseAssets = RestQueries.get("asset")
+        responseAssets = RestQueries.get("asset?columns=ASSET_DATABASE_ID&columns=LABEL&columns=LAST_CLOSE_VALUE&columns=TYPE&date=2016-06-01")
 
     if args.output_assets is not None:
         with open(args.output_assets, "w") as fd:
@@ -118,6 +120,6 @@ if __name__ == "__main__":
         portfolio.additem(asset)
 
     res = portfolio.putPortfolio()
-    print(res)
+#    print(res)
     test = RestQueries.get("portfolio/1830/dyn_amount_compo")
-    print(json.dumps(test, indent=4))
+#    print(json.dumps(test, indent=4))

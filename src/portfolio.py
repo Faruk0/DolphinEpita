@@ -42,7 +42,6 @@ class Portfolio:
             "type" : "front",
             "values" : {self.date : outAssets}
         }
-        print(json.dumps(body,indent=4))
         res = RestQueries.put(f"portfolio/{self.id}/dyn_amount_compo",
                         json.dumps(body))
         return res
