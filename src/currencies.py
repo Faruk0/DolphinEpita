@@ -5,7 +5,7 @@ class Currencies:
 
     def addOrGetCur(curName):
         if not curName in Currencies.rates:
-            res = RestQueries.get("currency/rate/" + curName + "/to/EUR")
+            res = RestQueries.get("currency/rate/" + curName + "/to/EUR?date=2016-06-01")
             value = float(res["rate"]["value"].replace(",", "."))
             Currencies.rates[curName] = value
         return Currencies.rates[curName]

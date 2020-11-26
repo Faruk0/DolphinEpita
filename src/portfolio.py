@@ -1,7 +1,6 @@
 import json
 
 from myasset import Asset
-#from portfolioItem import PortfolioItem
 from rest import RestQueries
 
 
@@ -20,6 +19,7 @@ class Portfolio:
 
     def additem(self, item):
         self.items.append(item)
+        self.value += item.value * item.qty
 
     def toString(self):
         result = ""
@@ -29,6 +29,16 @@ class Portfolio:
 
     def getportfolio(self):
         return RestQueries.get("portfolio/" + str(self.id) + "/dyn_amount_compo")
+
+    def checkNav(self):
+        lowerNavs, greaterNavs = [], []
+        for item in self.items:
+            nav = item.value * item.qty
+            if nav > self.value / 10:
+                greaterNavs.append(item)
+            elif nav < self.value / 100:
+                lowerNavs.append(item)
+        return lowerNavs, greaterNavs
 
     def putPortfolio(self):
         outAssets = [{
