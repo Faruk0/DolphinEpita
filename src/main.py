@@ -63,7 +63,7 @@ def findmin(assets):
 def computelist(assets):
     result = []
     for i in range(len(assets)):
-        if len(result) < 20:
+        if len(result) < 17:
             result.append(assets[i])
             continue
         min = findmin(result)
@@ -125,7 +125,6 @@ if __name__ == "__main__":
 
     computeQty(portfolio)
 
-    res = portfolio.putPortfolio()
     lowerNavs, greaterNavs = portfolio.checkNav()
     while len(lowerNavs) > 0 or len(greaterNavs) > 0:
         for asset in lowerNavs:
@@ -133,9 +132,12 @@ if __name__ == "__main__":
         for asset in greaterNavs:
             asset.qty = asset.qty - asset.sharpe
         lowerNavs, greaterNavs = portfolio.checkNav()
-        print(len(lowerNavs), len(greaterNavs), len(lowerNavs) + len(greaterNavs))
-    print("OK")
-    print(portfolio.checkNav())
-    res = portfolio.putPortfolio()
-    res = RestQueries.get("portfolio/1830/dyn_amount_compo")
-    print(json.dumps(res, indent = 4))
+
+    outAssets = portfolio.lastTouch()
+    res = portfolio.putPortfolio(outAssets)
+    res = portfolio.putPortfolio(outAssets)
+
+    tmp = Asset(1830, "", "", "")
+    test = get_all_sharpe([tmp])
+
+    print(json.dumps(test, indent=4))

@@ -42,12 +42,24 @@ class Portfolio:
                 lowerNavs.append(item)
         return lowerNavs, greaterNavs
 
-    def putPortfolio(self):
-        outAssets = [{
-            "asset" : {
-                "asset" : str(asset.id),
-                "quantity" : str(asset.qty)}}
-                      for asset in self.items]
+    def lastTouch(self):
+        outAssets = []
+        for asset in self.items:
+            qty = int(asset.qty)
+            if (qty == 0) and (asset.sharpe < self.totSharpe / len(outAssets)) and len(outAssets) > 15:
+                self.value -= asset.value
+                self. totSharpe -=  asset.sharpe
+                continue
+            elif qty == 0:
+                qty = 1
+
+            outAssets.append({
+                "asset" : {
+                    "asset" : str(asset.id),
+                    "quantity" : str(qty)}})
+        return outAssets
+
+    def putPortfolio(self, outAssets):
         body = {
             "label" : self.label,
             "currency" : {"code" : self.currency},
