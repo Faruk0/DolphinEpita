@@ -134,10 +134,11 @@ if __name__ == "__main__":
         lowerNavs, greaterNavs = portfolio.checkNav()
 
     outAssets = portfolio.lastTouch()
-    res = portfolio.putPortfolio(outAssets)
-    res = portfolio.putPortfolio(outAssets)
+    portfolio.putPortfolio(outAssets)
+    portfolio.putPortfolio(outAssets)
 
     tmp = Asset(1830, "", "", "")
     test = get_all_sharpe([tmp])
 
+    print("Portfolio Sharpe:")
     print(json.dumps(test, indent=4))
