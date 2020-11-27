@@ -11,15 +11,17 @@ class Portfolio:
     def __init__(self, id = 1830, currency="EUR", items = [],
                  label="EPITA_PTF_11", date="2016-06-01"):
         self.id = id
-        self.value = 0
+        self.value = 0.0
         self.currency = "EUR"
         self.items = []
         self.label = label
         self.date = date
+        self.totSharpe = 0.0
 
     def additem(self, item):
         self.items.append(item)
-        self.value += item.value * item.qty
+        self.value += item.value
+        self.totSharpe += item.sharpe
 
     def toString(self):
         result = ""

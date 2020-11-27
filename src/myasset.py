@@ -2,12 +2,7 @@ from rest import RestQueries
 
 
 class Asset:
-    id = 0
-    name = ""
-    type = ""
-    value = 0
-
-    def __init__(self, id, name, type, value, sharpe=0, qty=0):
+    def __init__(self, id, name, type, value, sharpe=0.0, qty=0):
         self.id = id
         self.name = name
         self.type = type
@@ -28,5 +23,6 @@ class Asset:
         return "ID : " + str(self.id) + "\n" + \
                "Nom : " + self.name + "\n" + \
                "Type : " + self.type + "\n" + \
+               "Value : " + str(self.value) + "\n" + \
                "Sharpe : " + str(self.sharpe) + "\n" + \
                "Qty : " + str(self.qty)

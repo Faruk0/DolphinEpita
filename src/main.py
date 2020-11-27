@@ -47,7 +47,7 @@ def get_all_sharpe(assetList):
 def load_sharpes(assetList, sharpeDict):
     for asset in assetList:
         if str(asset.id) in sharpeDict:
-            asset.sharpe = sharpeDict[str(asset.id)]["12"]["value"]
+            asset.sharpe = float(sharpeDict[str(asset.id)]["12"]["value"].replace(",", "."))
         else:
             print("ID {asset.id}: Not in sharpe list")
 
@@ -70,6 +70,11 @@ def computelist(assets):
         if assets[i].sharpe > result[min].sharpe:
             result[min] = assets[i]
     return result
+
+def computeQty(portfolio):
+    for asset in portfolio.items:
+        totVal = portfolio.value * asset.sharpe / portfolio.totSharpe
+        asset.qty = int(1000 * totVal / portfolio.value)
 
 if __name__ == "__main__":
 
@@ -116,10 +121,21 @@ if __name__ == "__main__":
     portfolio = Portfolio()
 
     for asset in bestassets:
-        asset.qty = 1
         portfolio.additem(asset)
 
+    computeQty(portfolio)
+
     res = portfolio.putPortfolio()
-#    print(res)
-    test = RestQueries.get("portfolio/1830/dyn_amount_compo")
-#    print(json.dumps(test, indent=4))
+    lowerNavs, greaterNavs = portfolio.checkNav()
+    while len(lowerNavs) > 0 or len(greaterNavs) > 0:
+        for asset in lowerNavs:
+            asset.qty = asset.qty + asset.sharpe
+        for asset in greaterNavs:
+            asset.qty = asset.qty - asset.sharpe
+        lowerNavs, greaterNavs = portfolio.checkNav()
+        print(len(lowerNavs), len(greaterNavs), len(lowerNavs) + len(greaterNavs))
+    print("OK")
+    print(portfolio.checkNav())
+    res = portfolio.putPortfolio()
+    res = RestQueries.get("portfolio/1830/dyn_amount_compo")
+    print(json.dumps(res, indent = 4))
